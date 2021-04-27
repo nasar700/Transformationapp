@@ -20,5 +20,17 @@ public class APIClient {
         return retrofit;
     }
 
+    public static Retrofit getClientFitnessFireBase() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://fitnessapp-139b9-default-rtdb.firebaseio.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build();
+        return retrofit;
+    }
+
 
 }

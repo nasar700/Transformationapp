@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public interface APIInterface {
     @GET("getImageList")
@@ -18,6 +19,10 @@ public interface APIInterface {
     @GET("fitnessweek")
     Call<WeekResponse> fetchWeek();
 
-    @GET("fitnessworklist1")
-    Call<FitListResponse> fetchFitList();
+//    @GET("fitnessworklist1")
+//    Call<FitListResponse> fetchFitList();
+
+    @GET("{dayId}.json")
+    Call<ArrayList<FitListData>> fetchFitList(@Path("dayId") String id);
+
 }

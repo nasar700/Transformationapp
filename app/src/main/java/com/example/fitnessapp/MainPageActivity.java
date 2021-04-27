@@ -1,11 +1,13 @@
 package com.example.fitnessapp;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
+
 import android.view.WindowManager;
-import android.widget.ProgressBar;
+
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +23,7 @@ import com.example.fitnessapp.fitnessData.FitnessDataImage;
 import com.example.fitnessapp.fitnessData.FitnessDataDays;
 import com.example.fitnessapp.fitnessData.FitnessDataWeeks;
 import com.example.fitnessapp.fitnessData.WeekResponse;
+
 
 import java.util.ArrayList;
 
@@ -39,12 +42,15 @@ public class MainPageActivity extends AppCompatActivity implements DayClickListe
     private RecyclerViewAdapterDays recyclerViewAdapterDays;
     private RecyclerWeekAdapter recyclerWeekAdapter;
 
-
+    private ProgressDialog nDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
+
+
+
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         imageModelArrayList=new ArrayList<>();
@@ -52,6 +58,14 @@ public class MainPageActivity extends AppCompatActivity implements DayClickListe
         recyclerViewAdapterHorizImage = new RecyclerViewAdapterHorizImage(this, imageModelArrayList);
         recyclerView.setAdapter(recyclerViewAdapterHorizImage);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        nDialog = new ProgressDialog(MainPageActivity.this);
+        nDialog.setMessage("Loading....");
+        nDialog.setTitle("Please Wait.");
+        nDialog.setIndeterminate(false);
+        nDialog.setCancelable(true);
+        nDialog.show();
+
 
 
         //recyclerviewDays = (RecyclerView) findViewById(R.id.recyclerviewDays);
@@ -88,9 +102,12 @@ public class MainPageActivity extends AppCompatActivity implements DayClickListe
         fetchFitnessWeeks();
 
     }
+
+
     void fetchFitnessBannerData(){
        //    progress.setVisibility(View.VISIBLE);
         apiInterface = APIClient.getClientFitnessMock().create(APIInterface.class);
+       // apiInterface = APIClient.getClientFitnessFireBase().create(APIInterface.class);
         Call<FitnessBannerResponse> call = apiInterface.fitnessBanner();
         call.enqueue(new Callback<FitnessBannerResponse>() {
             @Override
@@ -98,10 +115,13 @@ public class MainPageActivity extends AppCompatActivity implements DayClickListe
                 //    progress.setVisibility(View.GONE);
                 Log.d("===Response", response.body().getMeta().getDescription());
                 updateBanner(response.body().getData());
+                nDialog.dismiss();
             }
             @Override
             public void onFailure(Call<FitnessBannerResponse> call, Throwable t) {
                 call.cancel();
+                Toast.makeText(MainPageActivity.this, "Something Went Worng.", Toast.LENGTH_LONG).show();
+                nDialog.dismiss();
             //          progress.setVisibility(View.GONE);
             }
         });
@@ -121,11 +141,14 @@ public class MainPageActivity extends AppCompatActivity implements DayClickListe
             public void onResponse(Call<WeekResponse> call, Response<WeekResponse> response) {
                 Log.d("===response",response.body().getMeta().getDescription());
                 updateWeekBanner(response.body().getDataweeks());
+                nDialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<WeekResponse> call, Throwable t) {
-
+                call.cancel();
+                Toast.makeText(MainPageActivity.this, "Something Went Worng.", Toast.LENGTH_LONG).show();
+                nDialog.dismiss();
             }
         });
     }

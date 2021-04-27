@@ -8,7 +8,6 @@
     tools:context=".frontpagesapp.NextPage">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/my_tool_bar"
         app:title="INSTRUCTION"
         android:padding="15dp"
         app:titleTextColor="#ffff"

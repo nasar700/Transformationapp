@@ -1,19 +1,25 @@
 package com.example.fitnessapp.dayone;
 
+import android.app.ActionBar;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fitnessapp.APIClient;
 import com.example.fitnessapp.Data;
+import com.example.fitnessapp.MainPageActivity;
 import com.example.fitnessapp.R;
 import com.example.fitnessapp.fitnessData.APIInterface;
 import com.example.fitnessapp.fitnessData.FitListData;
@@ -33,6 +39,9 @@ public class DayOneActivityList extends AppCompatActivity {
     private CustomAdapterOne customAdapterOne;
     private ArrayList<FitListData> fitListModelArrayList;
     ListView listData;
+    private ProgressDialog nDialog;
+    Toolbar toolbar;
+    String id;
   //  ImageView imageView;
 
    // String fitList[] = {"THY", "LEG", "CHEST", "ABS", "HAND"};
@@ -50,6 +59,31 @@ public class DayOneActivityList extends AppCompatActivity {
         customAdapterOne = new CustomAdapterOne(this,fitListModelArrayList);
         listData.setAdapter(customAdapterOne);
 
+        nDialog = new ProgressDialog(DayOneActivityList.this);
+        nDialog.setMessage("Loading....");
+        nDialog.setTitle("Please Wait");
+        nDialog.setIndeterminate(false);
+        nDialog.setCancelable(true);
+        nDialog.show();
+
+        toolbar=(Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.containsKey("days") ){
+            id=(String) extras.getString("days");
+
+        }
+//        if (extras != null && extras.containsKey("data") &&
+//                extras.getSerializable("data") != null) {
+//            fitListData = (FitListData) extras.getSerializable("data");
+
 
 
         listData.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -66,25 +100,40 @@ public class DayOneActivityList extends AppCompatActivity {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         fetchFitList();
     }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        finish();
+        return super.onSupportNavigateUp();
+    }
+
+
 
     void fetchFitList(){
+        Log.d("==dayss","==msgg"+id);
        //    progress.setVisibility(View.VISIBLE);
-        apiInterface = APIClient.getClientFitnessMock().create(APIInterface.class);
-        Call<FitListResponse> call = apiInterface.fetchFitList();
-        call.enqueue(new Callback<FitListResponse>() {
+     //   apiInterface = APIClient.getClientFitnessMock().create(APIInterface.class);
+        apiInterface = APIClient.getClientFitnessFireBase().create(APIInterface.class);
+        Call<ArrayList<FitListData>> call = apiInterface.fetchFitList(id);
+        call.enqueue(new Callback<ArrayList<FitListData>>() {
             @Override
-            public void onResponse(Call<FitListResponse> call, Response<FitListResponse> response) {
+            public void onResponse(Call<ArrayList<FitListData>> call, Response<ArrayList<FitListData>> response) {
                 //    progress.setVisibility(View.GONE);
-                Log.d("===Responsesssss", response.body().getMeta().getDescription());
-                updateFitBanner(response.body().getDataFitlist());
+               // Log.d("===Responsesssss", response.body().getMeta().getDescription());
+
+                updateFitBanner(response.body());
+                nDialog.dismiss();
             }
             @Override
-            public void onFailure(Call<FitListResponse> call, Throwable t) {
+            public void onFailure(Call<ArrayList<FitListData>> call, Throwable t) {
                 call.cancel();
+                Toast.makeText(DayOneActivityList.this, "Something Went Worng.", Toast.LENGTH_LONG).show();
+                nDialog.dismiss();
                 //      progress.setVisibility(View.GONE);
             }
         });
     }
+
     private void updateFitBanner(ArrayList<FitListData> data){
         fitListModelArrayList = data;
         customAdapterOne.updateData(data);

@@ -8,27 +8,39 @@
     android:background="#A5D2E6"
     tools:context=".dayone.WorkOutOne0">
 
+
+
+
+
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="13dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:text="thy"
-        android:textSize="40sp"
+        android:textStyle="bold"
+        android:textSize="25sp"
+
         android:gravity="center"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageView
+            android:scaleType="fitXY"
             android:id="@+id/img_icon"
-            android:layout_width="350dp"
-            android:layout_height="270dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="240dp"
+            android:layout_marginTop="90dp"
             android:src="@drawable/nextpic"
             android:layout_weight="1.5"/>
+
+
     </LinearLayout>
 
     <TextView
@@ -38,10 +50,10 @@
         android:gravity="right"
         android:text="x20"
         android:textStyle="bold"
-        android:textSize="20sp"
-        android:layout_marginTop="360dp"
-        android:layout_marginRight="95dp"
-        android:layout_marginLeft="100dp"/>
+        android:textSize="16sp"
+        android:layout_marginTop="335dp"
+        android:layout_marginRight="10dp"
+        />
 
     <TextView
         android:id="@+id/tv_show_duration"
@@ -49,8 +61,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="timing 30 sec"
-        android:textSize="20sp"
-        android:layout_marginTop="400dp"
+        android:textSize="16sp"
+        android:layout_marginTop="390dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"/>
 
@@ -60,8 +72,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="remaining"
-        android:textSize="20sp"
-        android:layout_marginTop="460dp"
+        android:textSize="16sp"
+        android:layout_marginTop="430dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"/>
 
@@ -69,9 +81,11 @@
         android:id="@+id/button1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="530dp"
+        android:layout_marginTop="490dp"
         android:text="start"
+        android:textColor="#ffff"
         android:gravity="center"
+        android:background="#1C1C32"
         android:layout_marginLeft="70dp"
         android:layout_marginRight="70dp"/>
 
@@ -83,7 +97,17 @@
         android:textStyle="italic"
         android:text="skip"
         android:textSize="20sp"
-        android:layout_marginTop="590dp"
+        android:layout_marginTop="560dp"
         android:layout_marginRight="95dp"
         android:layout_marginLeft="100dp"/>
+
+
+    <TextView
+        android:id="@+id/countdown_textview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="#1C1C32"
+        android:text="3"
+        android:gravity="center"
+        android:textSize="150sp"/>
 </RelativeLayout>

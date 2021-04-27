@@ -1,45 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="#302F2F"
-    android:layout_width="match_parent"
+
+<RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainPageActivity">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/my_tool_bar"
-        app:title="LOSS WEIGHT"
-        android:padding="15dp"
-        app:titleTextColor="#ffff"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#1C1C32"
-        android:elevation="4dp"/>
-    
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:background="#1C1C32"
-        android:orientation="horizontal">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-        </androidx.recyclerview.widget.RecyclerView>
-    </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:background="#1C1C32"
-        android:id="@+id/recyclerviewDays"
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:background="#302F2F"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"/>
+        android:orientation="vertical"
+        tools:context=".MainPageActivity">
 
 
 
 
+        <androidx.appcompat.widget.Toolbar
+            app:title="LOSS WEIGHT"
+            android:padding="15dp"
+            app:titleTextColor="#ffff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#1C1C32"
+            android:elevation="4dp"/>
 
-</LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:background="#1C1C32"
+            android:orientation="horizontal">
+
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+            </androidx.recyclerview.widget.RecyclerView>
+        </RelativeLayout>
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:background="#1C1C32"
+            android:id="@+id/recyclerviewDays"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"/>
+
+
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
+

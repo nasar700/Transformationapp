@@ -6,13 +6,12 @@
     android:layout_height="match_parent">
 
 
-    <androidx.appcompat.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:titleTextColor="#ffff"
         app:title="WORK OUT"
-        android:padding="15dp"
-        android:background="#1C1C32"
         android:elevation="4dp"/>
 
     <LinearLayout

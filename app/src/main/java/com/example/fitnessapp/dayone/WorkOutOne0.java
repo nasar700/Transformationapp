@@ -2,9 +2,12 @@ package com.example.fitnessapp.dayone;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,12 +21,14 @@ import java.util.concurrent.TimeUnit;
 public class WorkOutOne0 extends AppCompatActivity {
     public long counter;
     Button button;
-    TextView textView, skip, mtitle, mtimes, mduration, mshow_duration;
+    TextView textView, skip, mtitle, mtimes, mduration, mshow_duration,textView_countdown;
     ImageView mimageView;
     FitListData fitListData;
     //    private Data data;
     private int position;
     private CountDownTimer countDownTimer;
+     MediaPlayer mp;
+    ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,7 @@ public class WorkOutOne0 extends AppCompatActivity {
 
         button = (Button) findViewById(R.id.button1);
         textView = (TextView) findViewById(R.id.count_textview);
+        textView_countdown=(TextView) findViewById(R.id.countdown_textview);
         mtitle = (TextView) findViewById(R.id.tv_title);
         mtimes = (TextView) findViewById(R.id.tv_times);
         mshow_duration = (TextView) findViewById(R.id.tv_show_duration);
@@ -41,12 +47,18 @@ public class WorkOutOne0 extends AppCompatActivity {
 
         skip = findViewById(R.id.work_out_skip);
         onCLickButton();
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        textView_countdown.setVisibility(View.GONE);
+       // button  = (Button) this.findViewById()
+
 
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.containsKey("data") &&
                 extras.getSerializable("data") != null) {
             fitListData = (FitListData) extras.getSerializable("data");
             updateViews(fitListData);
+
 //            position = extras.getInt("selected_position");
 //
 //            if(dataArrayList !=null){
@@ -58,6 +70,8 @@ public class WorkOutOne0 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+                mp.stop();
+
 //                button.setEnabled(true);
 //                if(position == dataArrayList.size()-1){
 //                    finish();
@@ -68,6 +82,27 @@ public class WorkOutOne0 extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if(mp!=null && mp.isPlaying())
+        {
+            mp.stop();
+            mp.release();
+            mp = null;
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mp!=null && mp.isPlaying())
+        {
+            mp.stop();
+            mp.release();
+            mp = null;
+        }
     }
 
     private void updateViews(FitListData data) {
@@ -85,12 +120,16 @@ public class WorkOutOne0 extends AppCompatActivity {
         }
 
     }
+
     public void onCLickButton() {
+         mp = MediaPlayer.create(this,R.raw.sounds);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                   WorkOutOne0.this.onClick();
+                  mp.start();
                 button.setEnabled(false);
+
 
             }
         });
@@ -114,21 +153,46 @@ public class WorkOutOne0 extends AppCompatActivity {
 
 
     private void onClick() {
-        Glide.with(this)
-                .asGif()
-                 .load(fitListData.getGif())
-                .into(mimageView);
 
-        countDownTimer = new CountDownTimer(fitListData.getDurationtime(),1000){
-            public void onTick(long millisUntilFinished){
-                textView.setText("remaining \n"+TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished));
+        countClick();
+
+     }
+     private void onStarts(){
+         Glide.with(this)
+                 .asGif()
+                 .load(fitListData.getGif())
+                 .into(mimageView);
+
+         countDownTimer = new CountDownTimer(fitListData.getDurationtime(),1000){
+             public void onTick(long millisUntilFinished){
+                 textView.setText("Remaing \n"+TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished));
+                 counter--;
+             }
+
+             public  void onFinish(){
+                 textView.setText("THANK YOU !!");
+             }
+         }.start();
+
+     }
+    private void countClick(){
+        textView_countdown.setVisibility(View.VISIBLE);
+        countDownTimer = new CountDownTimer(4000,1000) {
+            @Override
+            public void onTick(long l) {
+                textView_countdown.setText(""+TimeUnit.MILLISECONDS.toSeconds(l));
                 counter--;
             }
 
-            public  void onFinish(){
-                textView.setText("THANK YOU !!");
+            @Override
+            public void onFinish() {
+            //    mp.stop();
+                textView_countdown.setText("0");
+                textView_countdown.setVisibility(View.INVISIBLE);
+                onStarts();
             }
         }.start();
+    }
 
-     }
+
 }
