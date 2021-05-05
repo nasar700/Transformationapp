@@ -2,7 +2,6 @@ package com.example.fitnessapp.dayone;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -27,7 +26,8 @@ public class WorkOutOne0 extends AppCompatActivity {
     //    private Data data;
     private int position;
     private CountDownTimer countDownTimer;
-     MediaPlayer mp;
+     MediaPlayer count_down,peep,play_sound;
+     private boolean isFinish;
     ;
 
     @Override
@@ -50,7 +50,7 @@ public class WorkOutOne0 extends AppCompatActivity {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         textView_countdown.setVisibility(View.GONE);
-       // button  = (Button) this.findViewById()
+
 
 
         Bundle extras = getIntent().getExtras();
@@ -70,8 +70,9 @@ public class WorkOutOne0 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
-                mp.stop();
-
+                count_down.stop();
+                peep.stop();
+                play_sound.stop();
 //                button.setEnabled(true);
 //                if(position == dataArrayList.size()-1){
 //                    finish();
@@ -83,51 +84,45 @@ public class WorkOutOne0 extends AppCompatActivity {
         });
 
     }
-    @Override
-    protected void onStop() {
-        super.onStop();
 
-        if(mp!=null && mp.isPlaying())
-        {
-            mp.stop();
-            mp.release();
-            mp = null;
-        }
-    }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(mp!=null && mp.isPlaying())
-        {
-            mp.stop();
-            mp.release();
-            mp = null;
-        }
-    }
+
+
 
     private void updateViews(FitListData data) {
         mtitle.setText(data.getWorklist());
         mtimes.setText(data.getWorkTimes());
-        mshow_duration.setText("Duration "+TimeUnit.MILLISECONDS.toSeconds(data.getDurationtime())+" secs");
-        Glide.with(this)
-                .load(data.getImageUrl())
-                .into(mimageView);
+        mshow_duration.setText("Duration "+TimeUnit.MILLISECONDS.toSeconds(data.getDurationtime())+" Sec");
+        showImage(false);
 
-        textView.setText("Remaining \n"+TimeUnit.MILLISECONDS.toSeconds(data.getDurationtime()));
+        textView.setText(""+TimeUnit.MILLISECONDS.toSeconds(data.getDurationtime()));
         if(countDownTimer != null){
             countDownTimer.cancel();
             countDownTimer = null;
         }
 
     }
+    private void showImage(boolean isShowGif){
+        if (isShowGif){
+            Glide.with(getApplicationContext())
+                    .asGif()
+                    .load(fitListData.getGif())
+                    .into(mimageView);
+        }else {
+            Glide.with(this)
+                    .load(fitListData.getImageUrl())
+                    .into(mimageView);
+        }
+    }
 
     public void onCLickButton() {
-         mp = MediaPlayer.create(this,R.raw.sounds);
+        count_down = MediaPlayer.create(this,R.raw.count_down);
+        peep=MediaPlayer.create(this,R.raw.beep_04);
+        play_sound=MediaPlayer.create(this,R.raw.play);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                   WorkOutOne0.this.onClick();
-                  mp.start();
+                count_down.start();
                 button.setEnabled(false);
 
 
@@ -136,8 +131,55 @@ public class WorkOutOne0 extends AppCompatActivity {
 
     }
     //
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(play_sound!=null && play_sound.isPlaying())
+        {
+            play_sound.stop();
+            play_sound.release();
+            play_sound = null;
+
+        }
+         if (count_down!=null && count_down.isPlaying()){
+            count_down.stop();
+            count_down.release();
+            count_down = null;
+        }
+        if (peep!=null && peep.isPlaying()){
+            peep.stop();
+            peep.release();
+            peep = null;
+        }
+
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(play_sound!=null && play_sound.isPlaying())
+        {
+            play_sound.stop();
+            play_sound.release();
+            play_sound = null;
+
+        } if (count_down!=null && count_down.isPlaying()){
+            count_down.stop();
+            count_down.release();
+            count_down = null;
+        }
+        if (peep!=null && peep.isPlaying()){
+            peep.stop();
+            peep.release();
+            peep = null;
+        }
+
+        isFinish=true;
+        if (countDownTimer!=null)
+            countDownTimer.onFinish();
 
 
+    }
+   ;
 //        Glide.with(this)
 //                    .load("https://i.pinimg.com/originals/74/7e/47/747e47f06c6fd6f99b303ba33a1aaabd.gif")
 //                    .apply(
@@ -158,21 +200,32 @@ public class WorkOutOne0 extends AppCompatActivity {
 
      }
      private void onStarts(){
-         Glide.with(this)
-                 .asGif()
-                 .load(fitListData.getGif())
-                 .into(mimageView);
+        showImage(true);
 
          countDownTimer = new CountDownTimer(fitListData.getDurationtime(),1000){
              public void onTick(long millisUntilFinished){
-                 textView.setText("Remaing \n"+TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished));
+                 textView.setText("0:"+TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished));
                  counter--;
+                 if (play_sound!=null) {
+                     play_sound.start();
+                 }
              }
 
              public  void onFinish(){
-                 textView.setText("THANK YOU !!");
+                 textView.setText("THANK YOU!");
+                 if (play_sound!=null){
+                     play_sound.stop();
+                 }
+                 if (peep!=null) {
+                     peep.start();
+                 }
+                 if (!isFinish) {
+                     showImage(false);
+                 }
              }
          }.start();
+
+
 
      }
     private void countClick(){
@@ -186,13 +239,12 @@ public class WorkOutOne0 extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-            //    mp.stop();
-                textView_countdown.setText("0");
+                peep.stop();
                 textView_countdown.setVisibility(View.INVISIBLE);
-                onStarts();
+                if (!isFinish)
+                    onStarts();
             }
         }.start();
     }
-
 
 }
