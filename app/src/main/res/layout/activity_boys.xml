@@ -1,30 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#F8E1A8"
+    android:scrollbars="horizontal" android:id="@+id/ScrollView">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFEB3B"
-    tools:context=".frontpagesapp.ActivityBoys">
-
-    <TextView
-        android:layout_marginLeft="10dp"
+    tools:context=".frontpagesapp.ActivityBoys"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:scrollbars="vertical"
+    android:orientation="vertical">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tool_bar"
+        app:title="BOYS:-"
+        app:titleTextColor="#1C1C32"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="The rise in popularity of group fitness, which attracts more than 22.1 million people annually, has created vast changes in both the industry itself and the ways in which group fitness is delivered. Demand for talented, versatile group fitness instructors has exploded, making this the perfect time to get started on your professional journey. Follow these steps and you'll be off and running."
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.052" />
-
+        android:background="#F8E1A8"
+        android:elevation="4dp"/>
     <TextView
-        android:id="@+id/textview"
-        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/textview1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:textColor="#1C1C32"
+        android:textSize="20sp"
+        android:layout_height="wrap_content"
         android:text="INSTRUCTIONS AND TIPS:-"
         android:textStyle="bold" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/textview2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:textSize="15sp"
+        android:textColor="#0E0E0E"
+        android:text="Reps to failure means to muscle failure = your personal maximum, you repeat the move until you can't. It can be anything from one rep to twenty, normally applies to more challenging exercises. The goal is to do as many as you possibly can."
+        />
+    <TextView
+        android:id="@+id/textview3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reps throughout the day:"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:textColor="#1C1C32"
+        />
+    <TextView
+        android:id="@+id/textview4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textColor="#0E0E0E"
+        android:text="means that your goal is to get all of the numbers in by the end of the day. You can split the total number of reps for the day into manageable sets. In some of the challenges it is a necessity, in others an optional extra. Using this option will help you complete any challenge on your fitness level. Ideally, you want to do as fewer sets as possible. Most of the time you will begin to need this option a week or two into the challenge."/>
+    <TextView
+        android:id="@+id/textview5"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:textColor="#1C1C32"
+        android:textSize="20sp"
+        android:layout_height="wrap_content"
+        android:text="Transitions between exercises"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/textview6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:textSize="15sp"
+        android:textColor="#0E0E0E"
+        android:text="The transition from exercise to exercise is an important part of each circuit (set) - it is often what makes a particular workout more effective. Transitions are carefully worked out to hyperload specific muscle groups more for better results. For example if you see a plank followed by push-ups it means that you start performing push-ups right after you finished with the plank avoiding dropping your body on the floor in between."
+        />
+
+    <TextView
+        android:id="@+id/textview7"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:textColor="#1C1C32"
+        android:textSize="20sp"
+        android:layout_height="wrap_content"
+        android:text="Difficulty Levels"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/textview8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:textSize="15sp"
+        android:textColor="#0E0E0E"
+android:text="Each workout has three levels of difficulty: I, II and III.
+
+If you are new to exercise or you haven’t done any training in a long while you should start on Level I. You don’t have to stay on level I consistently, if you feel that you can do more, you can advance a level. Level III is the hardest level of difficulty and it can be pretty challenging to complete.
+
+Think of it as game levels of difficulty, except there is no Easy, it starts on normal:
+
+Level I: normal
+Level II: hard
+Level III: advanced
+
+Try not to push yourself too hard too fast; just because you can do something on a harder level it doesn’t mean that you should. You’ll end up too sore to work out the next day and the day after that and that’s just not at all helpful or productive. Gradually increase the load, keep your workouts challenging but doable."
+        />
+
+    <TextView
+        android:id="@+id/textview9"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:textColor="#1C1C32"
+        android:textSize="20sp"
+        android:layout_height="wrap_content"
+        android:text="Rest between sets"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/textview10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:textSize="15sp"
+        android:textColor="#0E0E0E"
+        android:text="There is no rest between exercises - only after sets, unless specified otherwise. You have to complete the entire set going from one exercise to another as fast as you can before you can rest.
+What does up to 2 minutes rest mean: it means you can rest for up to 2 minutes but the sooner you can go again the better. Eventually your recovery time will improve naturally, you won't need all two minutes to recover - and that will also be an indication of your improving fitness. "
+                />
+    <TextView
+        android:id="@+id/textview11"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:textColor="#1C1C32"
+        android:textSize="20sp"
+        android:layout_height="wrap_content"
+        android:text="Recommended rest time:"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/textview12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:textSize="15sp"
+        android:textColor="#0E0E0E"
+        android:text="Level I: 2 minutes or less"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:textSize="15sp"
+        android:textColor="#0E0E0E"
+        android:text="Level II: 60 seconds or less
+          "/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:textSize="15sp"
+        android:textColor="#0E0E0E"
+        android:text="Level III: 30 seconds or less"/>
+
+</LinearLayout>
+</ScrollView>

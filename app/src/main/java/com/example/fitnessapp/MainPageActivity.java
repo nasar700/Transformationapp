@@ -10,9 +10,9 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.fitnessapp.adapter.RecyclerViewAdapterDays;
 import com.example.fitnessapp.adapter.RecyclerViewAdapterHorizImage;
 import com.example.fitnessapp.adapter.RecyclerWeekAdapter;
@@ -41,7 +41,7 @@ public class MainPageActivity extends AppCompatActivity implements DayClickListe
     private RecyclerViewAdapterHorizImage recyclerViewAdapterHorizImage;
     private RecyclerViewAdapterDays recyclerViewAdapterDays;
     private RecyclerWeekAdapter recyclerWeekAdapter;
-
+    Toolbar toolbar;
     private ProgressDialog nDialog;
 
     @Override
@@ -49,7 +49,13 @@ public class MainPageActivity extends AppCompatActivity implements DayClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
 
+        toolbar=(Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
 
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
@@ -102,6 +108,13 @@ public class MainPageActivity extends AppCompatActivity implements DayClickListe
         fetchFitnessWeeks();
 
     }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        finish();
+        return super.onSupportNavigateUp();
+    }
+
 
 
     void fetchFitnessBannerData(){

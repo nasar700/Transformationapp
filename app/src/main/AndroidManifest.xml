@@ -7,8 +7,8 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/logo3"
-        android:label="No Pain-No Gain"
+        android:icon="@drawable/logofit3"
+        android:label="Body Transformation"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"

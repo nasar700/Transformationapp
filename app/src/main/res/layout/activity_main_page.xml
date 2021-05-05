@@ -20,8 +20,8 @@
 
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tool_bar"
             app:title="LOSS WEIGHT"
-            android:padding="15dp"
             app:titleTextColor="#ffff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
